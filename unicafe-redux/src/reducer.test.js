@@ -64,13 +64,19 @@ describe('unicafe reducer', () => {
   })
 
   test('reset all properties are set to 0', () => {
+    const state = initialState
+    
+    const goodAction = { type: 'GOOD' }
+    
+    deepFreeze(state)
+
+    let newState = counterReducer(state, goodAction)
+
     const action = {
       type: 'ZERO'
     }
-    const state = initialState
 
-    deepFreeze(state)
-    const newState = counterReducer(state, action)
+    newState = counterReducer(state, action)
     expect(newState).toEqual(initialState)
   })
 })
