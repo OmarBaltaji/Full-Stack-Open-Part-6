@@ -1,6 +1,17 @@
-import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
+import { voteAnecdote } from '../reducers/anecdoteReducer';
 
-const AnecdoteList = ({ anecdotes, vote }) => {
+const AnecdoteList = () => {
+  const anecdotes = useSelector(({ anecdotes, filter }) => {
+    const filteredAnecdotes = anecdotes.filter(anecdote => anecdote.content.toLowerCase().includes(filter)); 
+    return filteredAnecdotes.sort((a, b) => b.votes - a.votes);
+  })
+  const dispatch = useDispatch()
+
+  const vote = (id) => {
+    dispatch(voteAnecdote(id));
+  }
+
   return (
     <>
       {anecdotes.map(anecdote =>
@@ -16,11 +27,6 @@ const AnecdoteList = ({ anecdotes, vote }) => {
       )}
     </>
   )
-}
-
-AnecdoteList.propTypes = {
-  anecdotes: PropTypes.array.isRequired,
-  vote: PropTypes.func.isRequired,
 }
 
 export default AnecdoteList;
