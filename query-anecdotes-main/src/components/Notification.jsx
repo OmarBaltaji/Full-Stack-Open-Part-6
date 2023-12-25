@@ -1,7 +1,7 @@
 import { useNotificationValue } from "../contexts/NotificationContext"
 
 const Notification = () => {
-  const style = {
+  let style = {
     border: 'solid',
     padding: 10,
     borderWidth: 1,
@@ -10,10 +10,15 @@ const Notification = () => {
 
   const notification = useNotificationValue();
 
+  if (notification && notification.type) {
+    const color = notification.type === 'success' ? 'green' : 'red';
+    style = { ...style, borderColor: color, color };
+  }
+
   return (
     <>
-      {notification && <div style={style}>
-        {notification}
+      {notification && notification.message && <div style={style}>
+        {notification.message}
       </div>}
     </>
   )

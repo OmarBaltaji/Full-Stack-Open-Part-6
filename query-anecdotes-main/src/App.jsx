@@ -19,7 +19,7 @@ const App = () => {
         return anecdote;
       }));
 
-      notificationDispatch({ type: 'set', payload: `The anecdote "${updatedAnecdote.content}" has been voted on` });
+      notificationDispatch({ type: 'set', payload: { message: `The anecdote "${updatedAnecdote.content}" has been voted on`, type: 'success' } });
       setTimeout(() => {
         notificationDispatch({ type: 'set', payload: null });
       }, 5000);
